@@ -1,13 +1,24 @@
+.ONESHELL:
 SHELL := /bin/bash
 
 setup:
-	virtualenv robovenvv -p python3; \
+	virtualenv robovenvx -p python3; \
+
 
 install: setup
 	( \
-	source ./robovenvv/bin/activate; \
+	source ./robovenvx/bin/activate; \
 	pip install -r ./requirements-test.pip; \
 	)
+
+web: install
+	source ./robovenvx/bin/activate;
+	pip list
+	python -c "import os;print(os)"
+	django-admin.py startproject mysite
+	python mysite/manage.py migrate
+	python mysite/manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('demo', 'demo@example.com', 'PassPass1')"
+	python mysite/manage.py runserver 9011
 
 robot-test: install
 	python -m robot .
