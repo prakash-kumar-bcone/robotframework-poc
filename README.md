@@ -17,4 +17,8 @@ make web
 # Run Robot Framework
 
 Open an another(new) terminal and run:
-```make robot-test```
+
+```
+make test
+
+```
